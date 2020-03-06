@@ -13,6 +13,8 @@ const publicDirPath = path.join(__dirname, '../public');
 app.use(express.static(publicDirPath));
 
 io.on('connection', socket => {
+  socket.emit('message', 'Welcome@');
+
   socket.broadcast.emit('message', 'A new user has joined!');
 
   socket.on('sendMessage', (msg, callback) => {
@@ -32,7 +34,7 @@ io.on('connection', socket => {
       `https://google.com/maps?q=${data.latitude},${data.longitude}`
     );
 
-    callback(`From callback ${data.latitude},${data.longitude}`);
+    callback('Location Shared');
   });
 
   socket.on('disconnect', () => {
